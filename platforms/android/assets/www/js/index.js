@@ -37,14 +37,22 @@ var app = {
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
+        $("#btnTomarFoto").click(
+            function(){
+                navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+                    destinationType: Camera.DestinationType.FILE_URI });
 
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
+                function onSuccess(imageURI) {
+                    var image = $("#imgFotoCamara").get(0);
+                    image.src = imageURI;
+                }
 
-        console.log('Received Event: ' + id);
+                function onFail(message) {
+                    alert('Error: ' + message);
+                }
+            }
+        );
+
     }
 };
 
